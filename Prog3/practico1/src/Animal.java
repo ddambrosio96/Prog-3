@@ -50,7 +50,7 @@ public abstract class Animal {
     public abstract void behavior();
 
     public String toString(){
-        return "Name= "+ this.alias + "Owner= "+ this.owner + "Height= "+ this.height + "Age= "+ this.age + "\n";
+        return "Name= "+ this.alias + " ; Owner= "+ this.owner + " ; Height= "+ this.height + " ; Age= "+ this.age + "\n";
     }
 
     public boolean equals(Object o){
