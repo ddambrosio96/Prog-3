@@ -1,4 +1,6 @@
-public class MySimpleLinkedList<T> {
+import java.util.Iterator;
+
+public class MySimpleLinkedList<T> implements Iterable<T> {
 
     private Node<T> first;
     private int size;
@@ -6,6 +8,7 @@ public class MySimpleLinkedList<T> {
     public MySimpleLinkedList(){
         this.first = null;
         this.size = 0;
+
     }
 
     public void insertFront(T info){
@@ -13,6 +16,7 @@ public class MySimpleLinkedList<T> {
         n.setNext(this.first);
         this.first = n;
         this.size++;
+
     }
 
     public T extractFront() {
@@ -56,5 +60,22 @@ public class MySimpleLinkedList<T> {
             return null;
         }
         return cursor.getInfo();
+    }
+
+    public int indexOf(T info){
+        Node<T> cursor = this.first;
+        int index = 0;
+        while(cursor != null && !cursor.getInfo().equals(info)){
+            cursor = cursor.getNext();
+            index++;
+        }
+        if(cursor == null){
+            return -1;
+        }
+        return index;
+    }
+
+    public Iterator<T> iterator(){
+        return new IteratorMySimpleLinkedList<>(this.first);
     }
 }
