@@ -1,4 +1,6 @@
-public abstract class Animal {
+import java.util.Comparator;
+
+public abstract class Animal implements Comparable<Animal> {
 
     private String alias;
     private String owner;
@@ -62,5 +64,9 @@ public abstract class Animal {
             return this.idAnimal == a.idAnimal; //el idAnimal del objeto a "rompe el encaps.,
                                                 // pero Java lo permite porque se usa en la misma clase
         }
+    }
+
+    public int compareTo(Animal a){
+        return this.idAnimal - a.idAnimal;
     }
 }

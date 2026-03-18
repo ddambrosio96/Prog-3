@@ -1,6 +1,6 @@
 import java.util.Iterator;
 
-public class MySimpleLinkedList<T> implements Iterable<T> {
+public class MySimpleLinkedList<T extends Comparable<T>> implements Iterable<T> {
 
     private Node<T> first;
     private int size;
@@ -16,8 +16,28 @@ public class MySimpleLinkedList<T> implements Iterable<T> {
         n.setNext(this.first);
         this.first = n;
         this.size++;
-
     }
+
+    public void insertSorted(T info){
+        Node<T> n = new Node<T>(info,null);
+        if(this.first == null || n.getInfo().compareTo(first.getInfo()) < 0 ){
+            n.setNext(this.first);
+            this.first = n;
+        }
+        else{
+            Node<T> actual = this.first.getNext();
+            Node<T> anterior = this.first;
+            while(actual != null && n.getInfo().compareTo(actual.getInfo()) > 0){
+                anterior = actual;
+                actual = actual.getNext();
+            }
+            n.setNext(actual);
+            anterior.setNext(n);
+
+        }
+        size++;
+    }
+
 
     public T extractFront() {
 
@@ -78,4 +98,6 @@ public class MySimpleLinkedList<T> implements Iterable<T> {
     public Iterator<T> iterator(){
         return new IteratorMySimpleLinkedList<>(this.first);
     }
+
+
 }

@@ -4,7 +4,7 @@ public class Node<T> {
     private Node<T> next;
 
     public Node(){
-        this.info = info;
+        this.info = null;
         this.next = null;
     }
 
