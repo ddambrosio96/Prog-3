@@ -17,4 +17,11 @@ public class IteratorMySimpleLinkedList<T> implements Iterator<T> {
         this.cursor = cursor.getNext();
         return info;
     }
+
+    public T current(){
+        if(cursor!= null){
+           return cursor.getInfo();
+        }
+        return null;
+    }
 }

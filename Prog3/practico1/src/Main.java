@@ -34,6 +34,7 @@ public class Main {
         }
         */
 
+        /*
         listOrder.insertSorted(d3);
         listOrder.insertSorted(d1);
         listOrder.insertSorted(d4);
@@ -44,6 +45,68 @@ public class Main {
         for(int i = 0; i < listOrder.size(); i++){
             System.out.println(listOrder.get(i));
         }
+             */
+
+        MySimpleLinkedList<Animal> l1 = new MySimpleLinkedList<Animal>();
+        MySimpleLinkedList<Animal> l2 = new MySimpleLinkedList<Animal>();
+        MySimpleLinkedList<Animal> l3 = new MySimpleLinkedList<Animal>();
+        MySimpleLinkedList<Animal> l3Order = new MySimpleLinkedList<Animal>();
+
+        l1.insertFront(d3);
+        l1.insertFront(d2);
+        l1.insertFront(d1);
+        
+        l2.insertFront(d4);
+        l2.insertFront(d3);
+        l2.insertFront(d1);
+        
+        ////////////////////////////////////////// Ejercicio 5.a ////////////////////////////////
+        System.out.println("....................................");
+        insertarElementosComunes(l1, l2, l3);
+
+        System.out.println(l3);
+
+        ////////////////////////////////////////// Ejercicio 5.b ////////////////////////////////
+        System.out.println("....................................");
+        insertarElementosComunesOrdenados(l1, l2, l3Order);
+
+        System.out.println(l3Order);
+
+
 
     }
+
+    public static void insertarElementosComunes(MySimpleLinkedList<Animal> lOrigen,
+                                                MySimpleLinkedList<Animal> lBusqueda,
+                                                MySimpleLinkedList<Animal> lDestino){
+        for(Animal a: lOrigen){
+            if(lBusqueda.indexOf(a) != -1){
+                lDestino.insertSorted(a);
+            }
+        }                                                     
+    }
+
+    public static void insertarElementosComunesOrdenados(MySimpleLinkedList<Animal> lOrigen,
+                                                MySimpleLinkedList<Animal> lBusqueda,
+                                                MySimpleLinkedList<Animal> lDestino){
+        
+                                                    
+        IteratorMySimpleLinkedList<Animal> it1 = (IteratorMySimpleLinkedList<Animal>) lOrigen.iterator();
+        IteratorMySimpleLinkedList<Animal> it2 = (IteratorMySimpleLinkedList<Animal>) lBusqueda.iterator();
+
+        while(it1.hasNext() && it2.hasNext()){
+            if(it1.current().compareTo(it2.current()) < 0){
+                it1.next();
+            }
+            else{
+                if(it1.current().compareTo(it2.current()) > 0){
+                    it2.next(); 
+                }
+                else{
+                    lDestino.insertSorted(it1.next());
+                    it2.next();
+                }
+            }
+        }
+    } 
 }
