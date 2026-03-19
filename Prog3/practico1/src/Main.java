@@ -51,6 +51,7 @@ public class Main {
         MySimpleLinkedList<Animal> l2 = new MySimpleLinkedList<Animal>();
         MySimpleLinkedList<Animal> l3 = new MySimpleLinkedList<Animal>();
         MySimpleLinkedList<Animal> l3Order = new MySimpleLinkedList<Animal>();
+        MySimpleLinkedList<Animal> l3Dif = new MySimpleLinkedList<Animal>();
 
         l1.insertFront(d3);
         l1.insertFront(d2);
@@ -72,8 +73,18 @@ public class Main {
 
         System.out.println(l3Order);
 
+        ////////////////////////////////////////// Ejercicio 6 ////////////////////////////////
+        System.out.println("....................................");
+        
+        System.out.println(insertarElementosDiferencia(l1, l2));
 
-
+        System.out.println("....................................");
+        MyDoubleLinkedList<Animal> ld = new MyDoubleLinkedList<>();
+        ld.insertFront(d4);
+        ld.insertFront(d3);
+        ld.insertFront(d2);
+        ld.insertFront(d1);
+        ld.showReverse();
     }
 
     public static void insertarElementosComunes(MySimpleLinkedList<Animal> lOrigen,
@@ -108,5 +119,17 @@ public class Main {
                 }
             }
         }
-    } 
+    }
+    
+      public static MySimpleLinkedList<Animal> insertarElementosDiferencia(MySimpleLinkedList<Animal> lOrigen,
+                                                MySimpleLinkedList<Animal> lBusqueda){
+        
+        MySimpleLinkedList<Animal> lDestino = new MySimpleLinkedList<>();                                            
+        for(Animal a: lOrigen){
+            if(lBusqueda.indexOf(a) == -1){
+                lDestino.insertSorted(a);
+            }
+        }                                     
+        return lDestino;                
+    }
 }

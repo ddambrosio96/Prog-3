@@ -2,8 +2,8 @@ import java.util.Iterator;
 
 public class MySimpleLinkedList<T extends Comparable<T>> implements Iterable<T> {
 
-    private Node<T> first;
-    private int size;
+    protected Node<T> first;
+    protected int size;
 
     public MySimpleLinkedList(){
         this.first = null;
@@ -98,6 +98,7 @@ public class MySimpleLinkedList<T extends Comparable<T>> implements Iterable<T> 
     public Iterator<T> iterator(){
         return new IteratorMySimpleLinkedList<>(this.first);
     }
+
 
 
 }
