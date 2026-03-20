@@ -1,5 +1,3 @@
-import java.util.Comparator;
-
 public abstract class Animal implements Comparable<Animal> {
 
     private String alias;
