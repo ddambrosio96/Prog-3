@@ -47,11 +47,40 @@ public class Main {
         
     }
 
+    public static void fibonacci(int actual, int siguiente, int n){
+        if(n > 0){
+            System.out.print(actual + " ");
+            fibonacci(siguiente, actual+siguiente, n-1);
+        }
+    }
+
+    public static boolean indiceIgualElemento(int[] arr, int inicio, int fin){
+        if(inicio > fin){
+            return false;
+        }
+        else{
+            int medio = (inicio + fin)/2;
+            if(arr[medio] == medio){
+                return true;
+            }
+            else{
+                if(medio < arr[medio]){
+                    return indiceIgualElemento(arr, inicio, medio-1);
+                }
+                else{
+                    return indiceIgualElemento(arr, medio+1, fin);
+                }
+            }
+        }
+    }
+
     public static void main(String[] args){
-        int[] arr = {1,2,3,4,5,6,7,9};
+        int[] arr = {-10,-9,-8,3,5,6,8,9,11};
         //System.out.println("El arreglo esta ordenado: " + estaOrdenado(arr,0));
         //System.out.println("El elemento 2 esta : " + buscarElemento(arr,2,0,arr.length-1));
-        System.out.println("El binario de 26 es: " + aBinario(26));
+        //System.out.println("El binario de 26 es: " + aBinario(26));
+        //fibonacci(0,1,6);
+        System.out.println("El arreglo tiene un elemento que coincide con su indice: " + indiceIgualElemento(arr, 0, arr.length-1));
     }
 
 }
