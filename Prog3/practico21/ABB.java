@@ -129,9 +129,11 @@ public class ABB<T extends Comparable<T>> {
     }
 
     private void printPosOrderRec(NodeTree<T> tree){
-        printPosOrderRec(tree.getPrev());
-        printPosOrderRec(tree.getNext());
-        System.out.print(tree.getInfo() + " ");
+        if(tree != null){
+            printPosOrderRec(tree.getPrev());
+            printPosOrderRec(tree.getNext());
+            System.out.print(tree.getInfo() + " ");
+        }    
     }
 
     public void printPosOrder(){
@@ -139,9 +141,12 @@ public class ABB<T extends Comparable<T>> {
     }
 
     private void printPreOrderRec(NodeTree<T> tree){
-        System.out.print(tree.getInfo() + " ");
-        printPosOrderRec(tree.getPrev());
-        printPosOrderRec(tree.getNext());
+        if( tree != null){
+            System.out.print(tree.getInfo() + " ");
+            printPreOrderRec(tree.getPrev());
+            printPreOrderRec(tree.getNext());
+        }
+        
     }
 
     public void printPreOrder(){
@@ -149,9 +154,12 @@ public class ABB<T extends Comparable<T>> {
     }
 
     private void printInOrderRec(NodeTree<T> tree){
-        printPosOrderRec(tree.getPrev());
-        System.out.print(tree.getInfo() + " ");
-        printPosOrderRec(tree.getNext());
+        if(tree != null){
+            printInOrderRec(tree.getPrev());
+            System.out.print(tree.getInfo() + " ");
+            printInOrderRec(tree.getNext());
+        }
+        
     }
 
     public void printInOrder(){
@@ -180,21 +188,18 @@ public class ABB<T extends Comparable<T>> {
     }
 
     public List<T> getFronteraRec(NodeTree<T> tree){
-        if(tree == null){
-            return null;
-        }    
-        else{
-            List<T> l = new ArrayList<>();
+        List<T> l = new ArrayList<>();
+        if(tree != null){
+
             if(tree.getPrev() == null && tree.getNext() == null){
-                l.add(tree.getInfo());
-                
+                l.add(tree.getInfo());    
             }
             else{
                 l.addAll(getFronteraRec(tree.getPrev()));
                 l.addAll(getFronteraRec(tree.getNext()));
             }
-            return l;
-        }    
+        }
+        return l;    
     }
 
     public List<T> getFrontera(){
@@ -220,12 +225,9 @@ public class ABB<T extends Comparable<T>> {
     }
 
     private List<T> getElemAtLevelRec(NodeTree<T> tree, int level){
-
-        if(tree == null){
-            return null;
-        }
-        else{
-            List<T> l = new ArrayList<>();
+        List<T> l = new ArrayList<>();
+        if(tree != null){
+    
             if(level == 0){
                 l.add(tree.getInfo());
                 
@@ -234,13 +236,26 @@ public class ABB<T extends Comparable<T>> {
                 l.addAll(getElemAtLevelRec(tree.getPrev(), level-1));
                 l.addAll(getElemAtLevelRec(tree.getNext(), level-1));
             }
-            return l;
         }
-
+        return l;
     }
 
     public List<T> getElemAtLevel(int level){
         return getElemAtLevelRec(this.root, level);
+    }
+    
+    private int sumNotLeafRec(NodeTree<T> tree){
+        if(tree == null || tree.getPrev() == null && tree.getNext() == null ){
+            return 0;
+        }
+        else{
+            return (Integer)tree.getInfo() + sumNotLeafRec(tree.getPrev()) + sumNotLeafRec(tree.getNext());  
+        }
+    }
+    
+
+    public int sumNotLeaf(){
+        return sumNotLeafRec(this.root);
     }
 
 }
