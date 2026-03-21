@@ -201,11 +201,10 @@ public class Main {
         selectionSort(arr);
         //bubbleSort(arr);
         //mergeSort(arr,0,arr.length-1);
-        quickSort(arr,0,arr.length-1);
+        //quickSort(arr,0,arr.length-1);
         mostrarArreglo(arr);
 
-        //Queda pendiente hacer el QuickSort
-       
+    
 
         
     }

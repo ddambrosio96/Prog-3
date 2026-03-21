@@ -1,0 +1,246 @@
+package Prog3.practico21;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ABB<T extends Comparable<T>> {
+
+    private NodeTree<T> root;
+
+    public ABB(){
+        this.root = null;
+    }
+
+    public T getRoot(){
+        if(this.root == null){
+            return null;
+        }
+        return this.root.getInfo();
+    }
+
+    private boolean hasElemRec(NodeTree<T> tree, T elem){
+        if(tree == null){
+            return false;
+        }
+        else{
+            if(tree.getInfo().equals(elem)){
+                return true;
+            }
+            else{
+                if(elem.compareTo(tree.getInfo()) < 0){
+                    return hasElemRec(tree.getPrev(), elem);
+                }
+                else{
+                    return hasElemRec(tree.getNext(), elem);
+                }
+            }
+        }
+    }
+
+    public boolean hasElem(T elem){
+        return hasElemRec(this.root, elem);
+    }
+
+    public boolean isEmpty(){
+        return this.root == null;
+    }
+
+    private NodeTree<T> addRec(NodeTree<T> tree, T elem){
+        if(tree == null){
+            tree = new NodeTree<T>(elem,null,null);
+        }
+        else{
+            if(elem.compareTo(tree.getInfo()) < 0){
+                tree.setPrev(addRec(tree.getPrev(), elem));
+            }
+            else{
+                tree.setNext(addRec(tree.getNext(), elem));
+            }
+        }
+        return tree;
+    }
+
+    public void add(T elem){
+        this.root = addRec(this.root, elem);
+    }
+
+    private T infoPrevSubNext(NodeTree<T> tree){
+        if(tree.getPrev() == null){
+            return tree.getInfo();
+        }
+        else{
+            return infoPrevSubNext(tree.getPrev());
+        }
+    }
+
+    private NodeTree<T> deleteRec(NodeTree<T> tree, T elem){
+        if(tree != null){
+            if(tree.getInfo().equals(elem)){
+               //Caso 1: Nodo Hoja
+                if(tree.getPrev() == null && tree.getNext() == null){
+                    return null;
+                }    
+                else{
+                    //Caso 2: Un solo hijo
+                    if(tree.getPrev() == null){
+                        return tree.getNext();
+                    }
+                    else{
+                        if(tree.getNext() == null){
+                            return tree.getPrev();
+                        }
+                        //Caso 3: Nodo intermedio
+                        else{
+                           T newElem = infoPrevSubNext(tree.getNext()); 
+                           tree.setInfo(newElem);
+                           deleteRec(tree.getNext(), newElem);     
+                        }
+                    }
+                }          
+            }
+            else{
+                if(elem.compareTo(tree.getInfo()) < 0){
+                    tree.setPrev(deleteRec(tree.getPrev(), elem));
+                }
+                else{
+                    tree.setNext(deleteRec(tree.getNext(), elem));
+                }
+            }
+
+        }
+        return tree;
+    }
+
+    public void delete(T elem){
+        this.root = deleteRec(this.root, elem);
+    }
+
+    private int getHeightRec(NodeTree<T> tree, int depth){
+        if(tree == null){
+            return 0;
+        }
+        else{
+            return Math.max(depth, Math.max(getHeightRec(tree.getPrev(),depth+1), getHeightRec(tree.getNext(),depth+1)));
+        }
+    }
+
+    public int getHeight(){
+        return getHeightRec(this.root,0);
+    }
+
+    private void printPosOrderRec(NodeTree<T> tree){
+        printPosOrderRec(tree.getPrev());
+        printPosOrderRec(tree.getNext());
+        System.out.print(tree.getInfo() + " ");
+    }
+
+    public void printPosOrder(){
+        printPosOrderRec(this.root);
+    }
+
+    private void printPreOrderRec(NodeTree<T> tree){
+        System.out.print(tree.getInfo() + " ");
+        printPosOrderRec(tree.getPrev());
+        printPosOrderRec(tree.getNext());
+    }
+
+    public void printPreOrder(){
+        printPreOrderRec(this.root);
+    }
+
+    private void printInOrderRec(NodeTree<T> tree){
+        printPosOrderRec(tree.getPrev());
+        System.out.print(tree.getInfo() + " ");
+        printPosOrderRec(tree.getNext());
+    }
+
+    public void printInOrder(){
+        printInOrderRec(this.root);
+    }
+
+    private List<T> getLongestBranchRec(NodeTree<T> tree){
+        if(tree != null){
+            List<T> elemsPrev = getLongestBranchRec(tree.getPrev());
+            List<T> elemsNext = getLongestBranchRec(tree.getNext());
+            if(elemsPrev.size() > elemsNext.size()){
+                elemsPrev.add(0,tree.getInfo());
+                return elemsPrev;
+            }
+            else{
+                elemsNext.add(0,tree.getInfo());
+                return elemsNext;
+            }
+            
+        }
+        return new ArrayList<T>();
+    }
+
+    public List<T> getLongestBranch(){
+        return getLongestBranchRec(this.root);
+    }
+
+    public List<T> getFronteraRec(NodeTree<T> tree){
+        if(tree == null){
+            return null;
+        }    
+        else{
+            List<T> l = new ArrayList<>();
+            if(tree.getPrev() == null && tree.getNext() == null){
+                l.add(tree.getInfo());
+                
+            }
+            else{
+                l.addAll(getFronteraRec(tree.getPrev()));
+                l.addAll(getFronteraRec(tree.getNext()));
+            }
+            return l;
+        }    
+    }
+
+    public List<T> getFrontera(){
+        return getFronteraRec(this.root);
+    }
+
+    private T getMaxElemRec(NodeTree<T> tree){
+        if(tree == null){
+            return null;
+        }
+        else{
+            if(tree.getNext() == null){
+                return tree.getInfo();
+            }
+            else{
+                return getMaxElemRec(tree.getNext());
+            }
+        }
+    }
+
+    public T getMaxElem(){
+        return getMaxElemRec(this.root);
+    }
+
+    private List<T> getElemAtLevelRec(NodeTree<T> tree, int level){
+
+        if(tree == null){
+            return null;
+        }
+        else{
+            List<T> l = new ArrayList<>();
+            if(level == 0){
+                l.add(tree.getInfo());
+                
+            }
+            else{
+                l.addAll(getElemAtLevelRec(tree.getPrev(), level-1));
+                l.addAll(getElemAtLevelRec(tree.getNext(), level-1));
+            }
+            return l;
+        }
+
+    }
+
+    public List<T> getElemAtLevel(int level){
+        return getElemAtLevelRec(this.root, level);
+    }
+
+}
