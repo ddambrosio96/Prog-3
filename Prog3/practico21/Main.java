@@ -1,6 +1,24 @@
 package Prog3.practico21;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
+
+    //Segunda opción: aprovechar el método de la frontera, y recorrer la lista de frontera
+    public static List<Integer> getFronteraSup(ABB<Integer> tree, int elem){
+        List<Integer> listLeaf = tree.getFrontera();
+        List<Integer> listLeafSup = new ArrayList<>();
+        for (Integer leaf : listLeaf){
+            if (leaf > elem){
+               listLeafSup.add(leaf);   
+            }
+        }
+        return listLeafSup;
+
+    }
+
+
     public static void main(String[] args) {
         ABB<Integer> tree = new ABB<Integer>();
         ABB<String> treeEmpty = new ABB<String>();
@@ -56,8 +74,14 @@ public class Main {
             System.out.println("Elementos del nivel " + i + " : " + tree.getElemAtLevel(i));
         }
         */
-       tree.printInOrder();
-       System.out.println("La suma de los nodos internos del arbol da: " + tree.sumNotLeaf());
+       //tree.printInOrder();
+       //System.out.println("La suma de los nodos internos del arbol da: " + tree.sumNotLeaf());
+
+       //System.out.println("La lista de elementos hoja superiores a 8 son: " + tree.getFronteraSup(8));
+       //System.out.println("La lista de elementos hoja superiores a 8 son: " + getFronteraSup(tree, 8));
+
+       //tree.sumNodeChildren();
+       //tree.printPreOrder();
 
     }
 }

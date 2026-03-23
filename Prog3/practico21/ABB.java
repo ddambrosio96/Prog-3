@@ -253,9 +253,51 @@ public class ABB<T extends Comparable<T>> {
         }
     }
     
-
     public int sumNotLeaf(){
         return sumNotLeafRec(this.root);
+    }
+
+    //Primer opcion: Método del árbol
+
+    private List<T> getFronteraSupRec(NodeTree<T> tree, T elem){
+        List<T> l = new ArrayList<>();
+        if(tree != null){
+
+            if(tree.getPrev() == null && tree.getNext() == null && tree.getInfo().compareTo(elem) > 0){
+                l.add(tree.getInfo());    
+            }
+            else{
+                l.addAll(getFronteraSupRec(tree.getPrev(), elem));
+                l.addAll(getFronteraSupRec(tree.getNext(), elem));
+            }
+        }
+        return l;    
+
+    }
+
+    public List<T> getFronteraSup(T elem){
+        return getFronteraSupRec(this.root,elem);
+    }
+
+    private int sumNodeChildrenRec(NodeTree<Integer> tree){
+        if(tree == null){
+            return 0;
+        }
+        else{
+            if(tree.getPrev() == null && tree.getNext() == null){
+                return tree.getInfo();
+            }
+            else{
+                int sumChildren = sumNodeChildrenRec(tree.getPrev()) + sumNodeChildrenRec(tree.getNext());
+                tree.setInfo(sumChildren);
+                return sumChildren;
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void sumNodeChildren(){
+        sumNodeChildrenRec((NodeTree<Integer>)this.root);
     }
 
 }
