@@ -35,6 +35,8 @@ public class Main {
         tree.add(12);
         tree.add(6);
 
+
+
         /*tree.printInOrder();
         System.out.println();
         tree.printPreOrder();
@@ -83,5 +85,8 @@ public class Main {
        //tree.sumNodeChildren();
        //tree.printPreOrder();
 
+       System.out.println(tree.numbersConcatenated(2));
+        //tree.printPreOrder();
+        
     }
 }

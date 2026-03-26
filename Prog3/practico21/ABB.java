@@ -54,7 +54,9 @@ public class ABB<T extends Comparable<T>> {
                 tree.setPrev(addRec(tree.getPrev(), elem));
             }
             else{
-                tree.setNext(addRec(tree.getNext(), elem));
+                if(elem.compareTo(tree.getInfo()) > 0){
+                    tree.setNext(addRec(tree.getNext(), elem));
+                }
             }
         }
         return tree;
@@ -298,6 +300,44 @@ public class ABB<T extends Comparable<T>> {
     @SuppressWarnings("unchecked")
     public void sumNodeChildren(){
         sumNodeChildrenRec((NodeTree<Integer>)this.root);
+    }
+
+    private List<String> numbersConcatenatedRec(NodeTree<Integer> tree, int cantPairs, String result){
+        List<String> listPairs = new ArrayList<>();
+
+        if(tree == null){
+            return listPairs;
+        }
+
+        int value = tree.getInfo();
+
+        if(value % 2 == 0){
+            cantPairs--;
+        }
+
+        if(cantPairs < 0){
+            return listPairs;
+        }
+
+        String nuevo = result + value;
+
+        if(tree.getPrev() == null && tree.getNext() == null){
+            if(cantPairs == 0){
+                listPairs.add(nuevo);
+            }
+            return listPairs;
+        }
+
+      
+        listPairs.addAll(numbersConcatenatedRec(tree.getPrev(), cantPairs, nuevo));
+        listPairs.addAll(numbersConcatenatedRec(tree.getNext(), cantPairs, nuevo));
+
+        return listPairs;
+    }
+
+
+    public List<String> numbersConcatenated(int n){
+        return numbersConcatenatedRec((NodeTree<Integer>) this.root, n, "");
     }
 
 }
