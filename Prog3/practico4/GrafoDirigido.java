@@ -21,7 +21,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public void agregarVertice(int verticeId) {
+	public void agregarVertice(int verticeId) { //Funciona
 		if(!vertices.contains(verticeId)){
 			vertices.add(verticeId);
 			cantVertices++;
@@ -46,7 +46,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
+	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) { //Funciona
 		if(vertices.contains(verticeId1) && vertices.contains(verticeId2)){
 			estructura[verticeId1][verticeId2] = etiqueta;
 			cantArcos++;
@@ -73,12 +73,12 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public boolean contieneVertice(int verticeId) {
+	public boolean contieneVertice(int verticeId) { //Funciona
 		return vertices.contains(verticeId);
 	}
 
 	@Override
-	public boolean existeArco(int verticeId1, int verticeId2) {
+	public boolean existeArco(int verticeId1, int verticeId2) { //Funciona
 		for(Arco<T> a: arcos){
 			if(a.getVerticeOrigen() == verticeId1 && a.getVerticeDestino() == verticeId2){
 				return true;
@@ -88,7 +88,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public Arco<T> obtenerArco(int verticeId1, int verticeId2) {
+	public Arco<T> obtenerArco(int verticeId1, int verticeId2) { //Funciona
 		for(Arco<T> a: arcos){
 			if(a.getVerticeOrigen() == verticeId1 && a.getVerticeDestino() == verticeId2){
 				return a;
@@ -98,22 +98,22 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public int cantidadVertices() {
+	public int cantidadVertices() { //Funciona
 		return cantVertices;
 	}
 
 	@Override
-	public int cantidadArcos() {
+	public int cantidadArcos() { //Funciona
 		return cantArcos;
 	}
 
 	@Override
-	public Iterator<Integer> obtenerVertices() {
+	public Iterator<Integer> obtenerVertices() { //Funciona
 		return vertices.iterator();
 	}
 
 	@Override
-	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
+	public Iterator<Integer> obtenerAdyacentes(int verticeId) { //Funciona
 		List<Integer> ady = new ArrayList<>();
 		for(Arco<T> a: arcos){
 			if(a.getVerticeOrigen() == verticeId){
