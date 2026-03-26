@@ -1,6 +1,7 @@
-package ProgramacionIII.tp4;
+package Prog3.practico4;
 
 public class GrafoNoDirigido<T> extends GrafoDirigido<T> {
+	
 
 	@Override
 	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
