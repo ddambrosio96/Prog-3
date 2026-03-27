@@ -29,9 +29,11 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	private void borrarArcos(int verticeId){
-		for(Arco<T> a: arcos){
-			if(a.getVerticeOrigen() == verticeId){
-				arcos.remove(a);
+		for( Iterator<Arco<T>> it = arcos.iterator(); it.hasNext();){
+			Arco<T> a = it.next();
+			if(a.getVerticeOrigen() == verticeId || a.getVerticeDestino() == verticeId){
+				it.remove();
+				cantArcos--;
 			}
 		}
 	}
@@ -39,7 +41,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	@Override
 	public void borrarVertice(int verticeId) {
 		if(vertices.contains(verticeId)){
-			vertices.remove(verticeId);
+			vertices.remove((Integer)verticeId);
 			cantVertices--;
 			borrarArcos(verticeId);
 		}
@@ -64,7 +66,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public void borrarArco(int verticeId1, int verticeId2) {
+	public void borrarArco(int verticeId1, int verticeId2) { //Funciona
 		if(estructura[verticeId1][verticeId2] != null){
 			estructura[verticeId1][verticeId2] = null;
 			borrarArcoLista(verticeId1, verticeId2);
@@ -124,12 +126,12 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public Iterator<Arco<T>> obtenerArcos() {
+	public Iterator<Arco<T>> obtenerArcos() { //Funciona
 		return arcos.iterator();
 	}
 
 	@Override
-	public Iterator<Arco<T>> obtenerArcos(int verticeId) {
+	public Iterator<Arco<T>> obtenerArcos(int verticeId) { //Funciona
 		List<Arco<T>> arcosVertice = new ArrayList<>();
 		for(Arco<T> a: arcos){
 			if(a.getVerticeOrigen() == verticeId){
@@ -138,5 +140,4 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		}
 		return arcosVertice.iterator();
 	}
-
 }

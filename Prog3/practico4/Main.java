@@ -22,13 +22,18 @@ public class Main {
 		grafito.agregarArco(4, 1, 10);
 		grafito.agregarArco(4, 2, 5);
 		grafito.agregarArco(4, 3, 11);
+
+		//grafito.borrarArco(3, 2);
+		grafito.borrarVertice(4);
 		
 		//Metodos observadores
+		 
 		/* 
 		for(int i = 0; i <= 5; i++){
 			System.out.println("El vertice " + i + " esta en el grafo: " + grafito.contieneVertice(i));
 		}
 		*/
+		
 
 		/*
 		for(int i = 0; i <= 5; i++){
@@ -60,6 +65,7 @@ public class Main {
 		}
 		*/
 
+		/*
 		Iterator<Integer> itV = grafito.obtenerVertices();
 		while(itV.hasNext()){
 			int vertice = itV.next();
@@ -70,6 +76,24 @@ public class Main {
 			}
 			System.out.println();
 		}
+		*/
+
+		/*
+		Iterator<Arco<Integer>> itArcos = grafito.obtenerArcos();
+		while(itArcos.hasNext()){
+			Arco<Integer> a = itArcos.next();
+			System.out.println("("+ a.getVerticeOrigen() + ","+ a.getVerticeDestino()+") , etiqueta: " + a.getEtiqueta());
+		}
+		*/
+
+		/* 
+		Iterator<Arco<Integer>> itArcosVertice = grafito.obtenerArcos(4);
+		while(itArcosVertice.hasNext()){
+			Arco<Integer> a = itArcosVertice.next();
+			System.out.println("("+ a.getVerticeOrigen() + ","+ a.getVerticeDestino()+") , etiqueta: " + a.getEtiqueta());
+		}
+		*/
+		
 	}
 
 }
