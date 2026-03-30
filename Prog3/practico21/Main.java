@@ -54,8 +54,11 @@ public class Main {
         */
         //System.out.println(tree.isEmpty());
         //System.out.println(treeEmpty.isEmpty());
+        //tree.printInOrder();
+        //System.out.println();
+        //System.out.println(tree.delete(18));
+        //tree.printInOrder();
 
-        //tree.delete("F");
         //tree.delete("M");
         //tree.delete("T");
         //tree.delete("D");

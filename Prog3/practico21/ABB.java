@@ -3,6 +3,8 @@ package Prog3.practico21;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.soap.Node;
+
 public class ABB<T extends Comparable<T>> {
 
     private NodeTree<T> root;
@@ -75,8 +77,169 @@ public class ABB<T extends Comparable<T>> {
         }
     }
 
-    private NodeTree<T> deleteRec(NodeTree<T> tree, T elem){
-        if(tree != null){
+    private boolean deleteRec(NodeTree<T> tree, T elem){
+        
+        if (tree.getInfo().compareTo(elem) > 0) {
+            NodeTree<T> leftChildren = tree.getPrev();
+            if (leftChildren == null) {
+                return false;
+            } 
+            else {
+                if(leftChildren.getInfo().equals(elem)){
+                    if(leftChildren.getPrev() == null && leftChildren.getNext() == null){
+                        tree.setPrev(null);
+                    }
+                    else{
+                        if(leftChildren.getPrev() == null){
+                            tree.setPrev(leftChildren.getNext());
+                        }
+                        else{
+                            if(leftChildren.getNext() == null){
+                                tree.setPrev(leftChildren.getPrev());
+                            }
+                            else{
+                                T newElem = infoPrevSubNext(leftChildren.getNext()); 
+                                leftChildren.setInfo(newElem);
+                                deleteRec(leftChildren.getNext(), newElem);
+                            }   
+                        }
+                    }
+                    return true;
+                }
+                else{
+                    return deleteRec(leftChildren,elem);
+                }
+            }
+        } 
+        else{
+            NodeTree<T> rightChildren = tree.getNext();
+            if (rightChildren == null) {
+                return false;
+            } 
+            else {
+                if(rightChildren.getInfo().equals(elem)){
+                    if(rightChildren.getPrev() == null && rightChildren.getNext() == null){
+                        tree.setNext(null);
+                    }
+                    else{
+                        if(rightChildren.getPrev() == null){
+                            tree.setNext(rightChildren.getNext());
+                        }
+                        else{
+                            if(rightChildren.getNext() == null){
+                                tree.setNext(rightChildren.getPrev());
+                            }
+                            else{
+                                T newElem = infoPrevSubNext(rightChildren.getNext()); 
+                                rightChildren.setInfo(newElem);
+                                deleteRec(rightChildren.getNext(), newElem);
+                            }   
+                        }
+                    }
+                    return true;
+                }
+                else{
+                    return deleteRec(rightChildren,elem);
+                }
+            }
+        }    
+        
+        /*NodeTree<T> leftChildren = tree.getPrev();
+        NodeTree<T> rightChildren = tree.getNext();
+        if(leftChildren == null && rightChildren == null){
+            return false;
+        }
+        else{
+            if(leftChildren != null){
+                if (leftChildren.getInfo().compareTo(elem) > 0) {
+                    if (leftChildren.getPrev() == null) {
+                        return false;
+                    } 
+                    else {
+                        return deleteRec(leftChildren.getPrev(),elem);
+                    }
+                } 
+                else{ 
+                    if (leftChildren.getInfo().compareTo(elem) < 0) {
+                        if (leftChildren.getNext() == null) {
+                            return false;
+                        } 
+                        else {
+                            return deleteRec(leftChildren.getNext(),elem);
+                        }
+                    }    
+                    else{
+                        if(leftChildren.getPrev() == null && leftChildren.getNext() == null){
+                            tree.setPrev(null);    
+                        }
+                        else{
+                            if(leftChildren.getPrev() == null){
+                                tree.setPrev(leftChildren.getNext());
+                            }
+                            else if (leftChildren.getNext() == null){
+                                tree.setPrev(leftChildren.getNext());
+                            }
+                            else{
+                                T newElem = infoPrevSubNext(leftChildren.getNext()); 
+                                leftChildren.setInfo(newElem);
+                                deleteRec(leftChildren.getNext(), newElem);
+                            }
+                        }
+                        return true;
+                    }
+                }
+            }
+
+            if(rightChildren != null){
+                if (rightChildren.getInfo().compareTo(elem) > 0) {
+                    if (rightChildren.getPrev() == null) {
+                        return false;
+                    } 
+                    else {
+                        return deleteRec(rightChildren.getPrev(),elem);
+                    }
+                } 
+                else{ 
+                    if (rightChildren.getInfo().compareTo(elem) < 0) {
+                        if (rightChildren.getNext() == null) {
+                            return false;
+                        } 
+                        else {
+                            return deleteRec(rightChildren.getNext(),elem);
+                        }
+                    }    
+                    else{
+                        if(rightChildren.getPrev() == null && rightChildren.getNext() == null){
+                            tree.setNext(null);    
+                        }
+                        else{
+                            if(rightChildren.getPrev() == null){
+                                tree.setNext(rightChildren.getNext());
+                            }
+                            else if (rightChildren.getNext() == null){
+                                tree.setNext(rightChildren.getNext());
+                            }
+                            else{
+                                T newElem = infoPrevSubNext(rightChildren.getNext()); 
+                                rightChildren.setInfo(newElem);
+                                deleteRec(rightChildren.getNext(), newElem);
+                            }
+                        }
+                        return true;
+                    }
+                }
+            }
+            return true;
+        }
+            */
+        
+       
+
+         
+
+
+
+        /*if(tree != null){
             if(tree.getInfo().equals(elem)){
                //Caso 1: Nodo Hoja
                 if(tree.getPrev() == null && tree.getNext() == null){
@@ -111,23 +274,40 @@ public class ABB<T extends Comparable<T>> {
 
         }
         return tree;
+        */
     }
 
-    public void delete(T elem){
-        this.root = deleteRec(this.root, elem);
-    }
-
-    private int getHeightRec(NodeTree<T> tree, int depth){
-        if(tree == null){
-            return 0;
+    public boolean delete(T elem){
+        if(this.root == null){
+            return false;
         }
         else{
-            return Math.max(depth, Math.max(getHeightRec(tree.getPrev(),depth+1), getHeightRec(tree.getNext(),depth+1)));
+            if(this.root.getInfo().equals(elem)){
+                this.root = null;
+                return true;
+            }
+            else{
+                return deleteRec(this.root, elem);
+            }
+        }
+    }
+
+    private int getHeightRec(NodeTree<T> tree){
+        if(tree == null){
+            return -1;
+        }
+        else{
+            int heightLeft = getHeightRec(tree.getPrev());
+            int heightRight = getHeightRec(tree.getNext());
+            return Math.max(heightLeft, heightRight) + 1;
         }
     }
 
     public int getHeight(){
-        return getHeightRec(this.root,0);
+        if(this.root == null){
+            return -1;
+        }
+        return getHeightRec(this.root);
     }
 
     private void printPosOrderRec(NodeTree<T> tree){
