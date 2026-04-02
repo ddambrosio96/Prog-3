@@ -26,6 +26,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 			vertices.add(verticeId);
 			cantVertices++;
 		}
+		System.out.println(cantVertices);
 	}
 
 	private void borrarArcos(int verticeId){
