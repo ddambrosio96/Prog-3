@@ -33,9 +33,7 @@ public class Main {
 		int[] discovered = new int[cantVert];
 		int[] finalized = new int[cantVert];
 
-		for(int i = 0; i < state.length; i++){
-			state[i] = "Blanco";
-		}
+		cleanState(state);
 
 		for(int i = 0; i < state.length; i++){
 			if(state[i].equals("Blanco")){
@@ -70,9 +68,7 @@ public class Main {
 		int cantVert = g.cantidadVertices();
 		String[] state = new String[cantVert];
 		
-		for(int i = 0; i < state.length; i++){
-			state[i] = "NO_VISITADO";
-		}
+		cleanState(state);
 
 		for(int i = 0; i < state.length; i++){
 			if(state[i].equals("NO_VISITADO")){
@@ -105,9 +101,7 @@ public class Main {
 	public static boolean DFS_cyclic(GrafoDirigido<Integer> g){
 		int cantVert = g.cantidadVertices();
 		String[] state = new String[cantVert];
-		for(int i = 0; i < state.length; i++){
-			state[i] = "Blanco";
-		}
+		cleanState(state);
 
 		for(int i = 0; i < state.length; i++){
 			if(state[i].equals("Blanco")){
@@ -133,7 +127,7 @@ public class Main {
 			state[origen] = "Amarillo";
 			for(Iterator<Integer> adyacentes = g.obtenerAdyacentes(origen); adyacentes.hasNext();){
 				int ady = adyacentes.next();
-				if(state[ady] != "Amarillo"){
+				if(!state[ady].equals("Amarillo")){
 					DFS_longest_way_visit(g, ady, destino, state, partialWay,way);
 				}
 			}
@@ -147,12 +141,49 @@ public class Main {
 		String[] state = new String[cantVert];
 		ArrayList<Integer> partialWay = new ArrayList<>();
 		ArrayList<Integer> way = new ArrayList<>();
-		
-		for(int i = 0; i < state.length; i++){
-			state[i] = "Blanco";
-		}
+		cleanState(state);
 		DFS_longest_way_visit(g, origen, destino, state, partialWay, way);
 		return way;
+	}
+
+	public static boolean DFS_vertex_end_visit(GrafoDirigido<Integer> g, String[] state, int origen, int destino){
+		if(origen == destino){ 
+			return true;
+		}
+		else{
+			state[origen] = "Amarillo";
+			for(Iterator<Integer> adyacentes = g.obtenerAdyacentes(origen); adyacentes.hasNext();){
+				int ady = adyacentes.next();
+				if(state[ady].equals("Blanco")){
+					if(DFS_vertex_end_visit(g, state, ady, destino)){
+						return true;
+					}
+				}
+			}
+			state[origen] = "Negro";
+			return false;
+		}
+	}
+
+	public static List<Integer> DFS_vertex_end(GrafoDirigido<Integer> g, int destino){
+		int cantVert = g.cantidadVertices();
+		List<Integer> sol = new ArrayList<>();
+		String[] state = new String[cantVert];
+		cleanState(state);
+
+		for (int i = 0; i < state.length; i++){
+			if(i != destino && DFS_vertex_end_visit(g, state, i, destino)){
+				sol.add(i);
+			}
+			cleanState(state);
+		}
+		return sol;
+	}
+
+	public static void cleanState(String[] arr){
+		for(int i = 0; i < arr.length; i++){
+			arr[i] = "Blanco";
+		}
 	}
 
 	public static void showArrayStr(String[] arr){
@@ -273,7 +304,8 @@ public class Main {
 		//DFS(grafito);
 		//BFS(grafito);
 		//System.out.println("Existe un ciclo en el grafo: " + DFS_cyclic(grafito));
-		System.out.println("El camino mas largo entre el vertice 1 y 4 es: " + DFS_longest_way(grafito,1,4));
+		//System.out.println("El camino mas largo entre el vertice 1 y 4 es: " + DFS_longest_way(grafito,1,4));
+		//System.out.println("Los vertices que desde ellos existe un camino al vertice 5 es: " + DFS_vertex_end(grafito, 5));
 	}
 
 }
