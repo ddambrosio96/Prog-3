@@ -220,7 +220,7 @@ public class Main {
 		grafito.agregarArco(1, 0, 1);
 		grafito.agregarArco(1, 3, 1);
 		grafito.agregarArco(1, 4, 1);
-		//grafito.agregarArco(2, 1, 1);	
+		grafito.agregarArco(2, 1, 1);	
 		grafito.agregarArco(3, 4, 10);
 		grafito.agregarArco(3, 5, 5);
 		grafito.agregarArco(4, 2, 11);
@@ -231,27 +231,27 @@ public class Main {
 		grafito.agregarArco(7, 4, 11);
 
 		//grafito.borrarArco(3, 2);
-		//grafito.borrarVertice(3);
+		grafito.borrarVertice(3);
 		
 		//Metodos observadores
 		 
-		/* 
+		
 		for(int i = 0; i <= 5; i++){
 			System.out.println("El vertice " + i + " esta en el grafo: " + grafito.contieneVertice(i));
 		}
-		*/
+		
 		
 
-		/*
+		
 		for(int i = 0; i <= 5; i++){
 			for(int j = 0; j <= 5; j++){
 				System.out.println("El arco ("+i+","+j+") esta en el grafo: " + grafito.existeArco(i, j));
 			}
 		}
-		*/
+		
 
-		//System.out.println("Cantidad de vertices: " + grafito.cantidadVertices());
-		//System.out.println("Cantidad de arcos: " + grafito.cantidadArcos());
+		System.out.println("Cantidad de vertices: " + grafito.cantidadVertices());
+		System.out.println("Cantidad de arcos: " + grafito.cantidadArcos());
 
 		/*
 		for(int i = 0; i <= 5; i++){
@@ -300,12 +300,14 @@ public class Main {
 			System.out.println("("+ a.getVerticeOrigen() + ","+ a.getVerticeDestino()+") , etiqueta: " + a.getEtiqueta());
 		}
 		*/
+		
 		//System.out.println(grafito.cantidadVertices());
 		//DFS(grafito);
 		//BFS(grafito);
 		//System.out.println("Existe un ciclo en el grafo: " + DFS_cyclic(grafito));
 		//System.out.println("El camino mas largo entre el vertice 1 y 4 es: " + DFS_longest_way(grafito,1,4));
 		//System.out.println("Los vertices que desde ellos existe un camino al vertice 5 es: " + DFS_vertex_end(grafito, 5));
+		
 	}
 
 }
