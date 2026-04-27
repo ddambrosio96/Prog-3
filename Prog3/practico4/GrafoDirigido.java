@@ -35,12 +35,26 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		}
 	}
 
+	private void borrarAdyacente(int verticeDestino){
+		for(List<Arco<T>> ady: vertices.values()){
+			int i = 0;
+			while(i < ady.size() && ady.get(i).getVerticeDestino() != verticeDestino){
+				i++;
+			}
+			if(i < ady.size()){
+				ady.remove(i);
+				cantArcos--;
+			}
+		}
+	}
+
 	@Override
 	public void borrarVertice(int verticeId) {//
 		if(vertices.containsKey(verticeId)){
 			cantVertices--;
 			borrarArcos(verticeId);
 			vertices.remove(verticeId);
+			borrarAdyacente(verticeId);
 		}
 	}
 
