@@ -172,6 +172,42 @@ public class Main {
 		return sol;
 	}
 
+	public static List<Integer> BFS_shortest_way(GrafoDirigido<Integer> g, int origen, int destino){
+
+		Queue<Integer> queueVertices = new PriorityQueue<>();
+		queueVertices.add(origen);
+		HashMap<Integer, String> state = new HashMap<>();
+		setState(g,state, "NO_VISITADO");
+		while(!queueVertices.isEmpty()){
+			
+			int elem = queueVertices.poll();
+			for(Iterator<Integer> it = g.obtenerAdyacentes(elem); it.hasNext();){
+				int ady = it.next();
+				if(state.get(ady).equals("NO_VISITADO")){
+					state.put(ady, String.valueOf(elem));
+					if(ady == destino){
+						queueVertices.clear();
+					}
+					else{
+						queueVertices.add(ady);
+					}
+				}
+			}
+		}
+		List<Integer> way = new ArrayList<>();
+		int verticeActual = destino;
+		if(state.get(destino).equals("NO_VISITADO")){
+			return null;
+		}
+		while(verticeActual != origen){
+			way.add(0,verticeActual);
+			verticeActual = Integer.parseInt(state.get(verticeActual)); 
+		}
+		way.add(0,origen);
+		return way;
+
+	}
+
 	public static void setState(GrafoDirigido<Integer> g, HashMap<Integer, String> state, String startVal){
 		for(Iterator<Integer> v = g.obtenerVertices(); v.hasNext();){
 			int numVertice = v.next();
@@ -209,7 +245,7 @@ public class Main {
 		grafito.agregarVertice(7);
 		
 		grafito.agregarArco(0, 2, 3);
-		grafito.agregarArco(0, 4, 4);
+		grafito.agregarArco(0, 1, 4);
 		grafito.agregarArco(1, 0, 1);
 		grafito.agregarArco(1, 3, 1);
 		grafito.agregarArco(1, 4, 1);
@@ -299,8 +335,8 @@ public class Main {
 		//BFS(grafito);
 		//System.out.println("Existe un ciclo en el grafo: " + DFS_cyclic(grafito));
 		//System.out.println("El camino mas largo entre el vertice 1 y 4 es: " + DFS_longest_way(grafito,1,4));
-		System.out.println("Los vertices que desde ellos existe un camino al vertice 5 es: " + DFS_vertex_end(grafito, 5));
-		
+		//System.out.println("Los vertices que desde ellos existe un camino al vertice 5 es: " + DFS_vertex_end(grafito, 5));
+		System.out.println("El camino mas corto que hay entre el vertice 0 y el 4 es: " + BFS_shortest_way(grafito,0,4));
 	}
 
 }
