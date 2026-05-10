@@ -238,6 +238,8 @@ public class Main {
 			DFS_all_ways_visit(g, state, new ArrayList<Integer>(), ways , origen, destino, origenCortado, destinoCortado);
 			return ways;
 		}
+	
+	
 
 	public static void setState(GrafoDirigido<Integer> g, HashMap<Integer, String> state, String startVal){
 		for(Iterator<Integer> v = g.obtenerVertices(); v.hasNext();){
@@ -265,6 +267,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		GrafoDirigido<Integer> grafito = new GrafoDirigido<>();
+		//GrafoNoDirigido<Integer> grafitoND = new GrafoNoDirigido<>();
 		
 		grafito.agregarVertice(0);
 		grafito.agregarVertice(1);
@@ -274,6 +277,11 @@ public class Main {
 		grafito.agregarVertice(5);
 		grafito.agregarVertice(6);
 		grafito.agregarVertice(7);
+		grafito.agregarVertice(8);
+		grafito.agregarVertice(9);
+		grafito.agregarVertice(10);
+		grafito.agregarVertice(11);
+		grafito.agregarVertice(12);
 		
 		grafito.agregarArco(0, 2, 3);
 		grafito.agregarArco(0, 4, 4);
@@ -289,6 +297,9 @@ public class Main {
 		grafito.agregarArco(6, 5, 11);
 		grafito.agregarArco(6, 7, 11);
 		grafito.agregarArco(7, 4, 11);
+		
+
+
 
 		//grafito.borrarArco(3, 2);
 		//grafito.borrarVertice(3);
@@ -368,7 +379,8 @@ public class Main {
 		//System.out.println("El camino mas largo entre el vertice 1 y 4 es: " + DFS_longest_way(grafito,1,4));
 		//System.out.println("Los vertices que desde ellos existe un camino al vertice 5 es: " + DFS_vertex_end(grafito, 5));
 		//System.out.println("El camino mas corto que hay entre el vertice 0 y el 4 es: " + BFS_shortest_way(grafito,0,4));
-		System.out.println("Los caminos alternativos que hay entre el vertice 0 y el 4 es: " + DFS_all_ways(grafito,0,4,3,4));
+		//System.out.println("Los caminos alternativos que hay entre el vertice 0 y el 4 es: " + DFS_all_ways(grafito,0,4,3,4));
+		
 	}
 
 }
